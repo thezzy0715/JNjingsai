@@ -1,1 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金诺 · 竞赛成长资源站（布局 Demo）</title>
+<style>
+  :root{
+    --blue:#1f6feb; --blue-d:#1550b3; --teal:#0ea5a4; --ink:#1f2d3d;
+    --muted:#6b7a8c; --line:#e6ebf2; --bg:#f7f9fc; --card:#fff;
+    --shadow:0 2px 10px rgba(31,45,61,.06); --shadow-h:0 8px 24px rgba(31,45,61,.12);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
+  /* ---------- 顶部导航 ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);
+         backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:22px;height:62px}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:19px;color:var(--blue-d)}
+  .logo i{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--teal));
+          display:inline-block}
+  .nav a.lnk{font-size:15px;color:#41505f;padding:6px 2px;border-bottom:2px solid transparent}
+  .nav a.lnk:hover{color:var(--blue);border-color:var(--blue)}
+  .nav .spacer{flex:1}
+  .nav .cta{background:var(--blue);color:#fff;padding:8px 16px;border-radius:10px;font-size:14px;font-weight:600}
+
+  /* ---------- 首屏 ---------- */
+  .hero{background:linear-gradient(160deg,#eaf2ff 0%,#f4fbfa 100%);
+        border-bottom:1px solid var(--line);padding:56px 0 48px}
+  .hero h1{margin:0 0 12px;font-size:34px;letter-spacing:.5px}
+  .hero h1 em{font-style:normal;color:var(--blue)}
+  .hero p{margin:0 0 26px;color:var(--muted);font-size:16px;max-width:640px}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;
+       font-weight:700;font-size:16px;box-shadow:var(--shadow);transition:.18s}
+  .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-h)}
+  .btn.p{background:var(--blue);color:#fff}
+  .btn.s{background:#fff;color:var(--blue-d);border:1.5px solid #cfe0ff}
+  .btn.t{background:var(--teal);color:#fff}
+
+  /* ---------- 版块标题 ---------- */
+  section{padding:44px 0 8px}
+  .sec-head{display:flex;align-items:flex-end;gap:12px;margin-bottom:20px}
+  .sec-head h2{margin:0;font-size:22px;display:flex;align-items:center;gap:10px}
+  .sec-head h2 b{display:inline-block;width:6px;height:22px;border-radius:3px;background:var(--blue)}
+  .sec-head .sub{color:var(--muted);font-size:14px;padding-bottom:3px}
+
+  /* ---------- 卡片 ---------- */
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;
+        box-shadow:var(--shadow);transition:.18s;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-h);border-color:#cfe0ff}
+  .card .ico{font-size:22px}
+  .card h3{margin:8px 0 6px;font-size:16.5px}
+  .card p{margin:0;font-size:13.5px;color:var(--muted);min-height:38px}
+  .card .go{margin-top:10px;font-size:13px;color:var(--blue);font-weight:600}
+  .card .go::after{content:" →"}
+  .tag{position:absolute;top:12px;right:12px;font-size:11.5px;color:#0b7a79;background:#e6f7f6;
+       border-radius:6px;padding:2px 8px}
+  .tag.hot{color:#a15c00;background:#fff3e0}
+  .card.big{padding:22px}
+  .card.big h3{font-size:18px}
+
+  /* 官方链接标记 */
+  .official{font-size:11.5px;color:#0b7a79;background:#e6f7f6;border-radius:6px;padding:1px 7px;margin-left:6px}
+
+  /* ---------- 小圆角横条（测评/资源） ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;
+        box-shadow:var(--shadow);transition:.15s}
+  .chip:hover{border-color:var(--blue);color:var(--blue)}
+
+  /* ---------- 底部 ---------- */
+  footer{margin-top:56px;padding:34px 0;background:#0f1b2b;color:#9fb0c3;font-size:13.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ---------- 布局标注（demo 专用，正式上线可整段删除） ---------- */
+  .hint-outline{outline:2px dashed #f0a04b;outline-offset:6px;border-radius:6px;position:relative}
+  .hint-note{position:absolute;top:-14px;left:12px;background:#f0a04b;color:#fff;font-size:12px;
+             padding:2px 9px;border-radius:6px;font-weight:600;z-index:2}
+  #toggleHint{position:fixed;right:18px;bottom:18px;z-index:99;background:#1f2d3d;color:#fff;border:0;
+              padding:11px 16px;border-radius:12px;font-size:13.5px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  body.no-hint .hint-outline{outline:none}
+  body.no-hint .hint-note{display:none}
+
+  @media (max-width:900px){
+    .g3,.g4{grid-template-columns:repeat(2,1fr)}
+    .hero h1{font-size:26px}
+    .nav a.lnk{display:none}
+  }
+  @media (max-width:560px){
+    .g2,.g3,.g4{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<button id="toggleHint">隐藏布局标注</button>
+
+<!-- ================= 导航 ================= -->
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#"><i></i>金诺数学 · 资源站</a>
+    <a class="lnk" href="#race">竞赛报名</a>
+    <a class="lnk" href="#path">升学通道</a>
+    <a class="lnk" href="#test">测评真题</a>
+    <a class="lnk" href="#game">益智游戏</a>
+    <a class="lnk" href="#tool">工具</a>
+    <a class="lnk" href="#ai">AI</a>
+    <span class="spacer"></span>
+    <a class="cta" href="#race">本期报名通道</a>
+  </div>
+</header>
+
+<!-- ================= 首屏 ================= -->
+<div class="hero">
+  <div class="wrap hint-outline">
+    <span class="hint-note">① 首屏：一句话定位 + 3 个主入口（只放最想让家长点的）</span>
+    <h1>从杯赛到丘班，<em>一条路走通</em></h1>
+    <p>赛事报名、升学通道、测评真题、益智游戏、数学工具、AI 助手——家长最常问的六件事，一站直达。</p>
+    <div class="hero-btns">
+      <a class="btn p" href="#race">🏁 看正在报名的赛事</a>
+      <a class="btn s" href="#path">🎓 查清北 / 丘班通道</a>
+      <a class="btn t" href="#tool">🧰 打开数学工具</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 一、竞赛报名 ================= -->
+<section id="race">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><b></b>竞赛报名</h2>
+      <span class="sub">每年赛程会变，以官网为准</span>
+    </div>
+    <div class="grid g3 hint-outline">
+      <span class="hint-note">② 三列卡片：一个赛事一张卡，右上角放“适合年级/赛季”标签</span>
+
+      <a class="card" href="https://math-kangaroo.org.cn/" target="_blank" rel="noopener nofollow">
+        <span class="tag hot">1–12 年级</span>
+        <div class="ico">🦘</div>
+        <h3>袋鼠数学 Math Kangaroo</h3>
+        <p>低龄最友好，分 6 个等级；中国区走 ASDAN 考点报名</p>
+        <div class="go">进入官网</div>
+      </a>
+
+      <a class="card" href="https://www.seedasdan.asia/" target="_blank" rel="noopener nofollow">
+        <span class="tag">报名入口</span>
+        <div class="ico">🌏</div>
+        <h3>阿思丹 ASDAN</h3>
+        <p>袋鼠、AMC8、澳洲 AMC、SASMO 等国际赛的中国区报名</p>
+        <div class="go">查看考位</div>
+      </a>
+
+      <a class="card" href="https://www.yau-awards.com/" target="_blank" rel="noopener nofollow">
+        <span class="tag">初中可报</span>
+        <div class="ico">🏅</div>
+        <h3>丘成桐中学科学奖</h3>
+        <p>科研类赛事，含数学奖，适合有课题能力的孩子</p>
+        <div class="go">进入官网</div>
+      </a>
+    </div>
+    <div class="chips" style="margin-top:14px">
+      <a class="chip" href="#" target="_blank">华数之星（原华杯赛）</a>
+      <a class="chip" href="#" target="_blank">希望数学</a>
+      <a class="chip" href="#" target="_blank">全国青少年科技创新大赛</a>
+      <a class="chip" href="#" target="_blank">WMO 世界数学奥林匹克</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 二、升学通道 ================= -->
+<section id="path">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><b></b>升学通道</h2>
+      <span class="sub">只用官网，二手信息容易过期</span>
+    </div>
+    <div class="grid g2 hint-outline">
+      <span class="hint-note">③ 两列大卡：这类最重要，字号大一号、给“官方”标记</span>
+
+      <a class="card big" href="https://join-tsinghua.edu.cn/gnxs/sxrcpyjh.htm" target="_blank" rel="noopener nofollow">
+        <div class="ico">🎓</div>
+        <h3>清华“丘班”<span class="official">官方</span></h3>
+        <p>丘成桐数学科学领军人才培养计划：简章、报名、测试结果都在清华本科招生网发布，每年 9–10 月出简章。</p>
+        <div class="go">看招生简章</div>
+      </a>
+
+      <a class="card big" href="https://join-tsinghua.edu.cn/" target="_blank" rel="noopener nofollow">
+        <div class="ico">🏛️</div>
+        <h3>清华大学本科招生网<span class="official">官方</span></h3>
+        <p>强基计划、学科体验营、数学人才培养计划的统一入口。</p>
+        <div class="go">进入网站</div>
+      </a>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <a class="card" href="https://www.gotopku.cn/" target="_blank" rel="noopener nofollow">
+        <div class="ico">📘</div><h3>北京大学本科招生网<span class="official">官方</span></h3>
+        <p>强基计划、数学英才班等</p><div class="go">进入网站</div>
+      </a>
+      <a class="card" href="https://zsb.ustc.edu.cn/" target="_blank" rel="noopener nofollow">
+        <div class="ico">🔬</div><h3>中科大少年班 / 少创班</h3>
+        <p>初中阶段可关注的拔尖通道</p><div class="go">进入网站</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 三、测评真题 ================= -->
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><b></b>测评 · 真题</h2>
+      <span class="sub">用横条，信息密度高、不占篇幅</span>
+    </div>
+    <div class="chips hint-outline" style="position:relative">
+      <span class="hint-note">④ 这一栏用“胶囊”横条，8–10 个一屏放完</span>
+      <a class="chip" href="#" target="_blank">MathStalents 测评（微信小程序）</a>
+      <a class="chip" href="https://math-kangaroo.org.cn/lnzt" target="_blank">袋鼠历年真题 PDF</a>
+      <a class="chip" href="https://math-kangaroo.org.cn/lnsg" target="_blank">袋鼠分数线 / 赛果</a>
+      <a class="chip" href="https://join-tsinghua.edu.cn/zygg.htm" target="_blank">丘班测试公告</a>
+      <a class="chip" href="#" target="_blank">华杯赛历年真题</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 四、益智游戏 ================= -->
+<section id="game">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><b></b>益智游戏</h2>
+      <span class="sub">按年级标注，家长才敢点</span>
+    </div>
+    <div class="grid g4 hint-outline">
+      <span class="hint-note">⑤ 四列小卡：只放 8–12 个精的，宁少勿多</span>
+
+      <a class="card" href="https://cn.sudoku.today/" target="_blank" rel="noopener nofollow">
+        <span class="tag">4 年级+</span><div class="ico">🔢</div>
+        <h3>今日数独</h3><p>每天 7 道新题，50+ 变体</p><div class="go">去玩</div>
+      </a>
+      <a class="card" href="https://xn--hdk0a1d0a.jp/zh/" target="_blank" rel="noopener nofollow">
+        <span class="tag">1–4 年级</span><div class="ico">🧩</div>
+        <h3>迷你数独</h3><p>3×3 / 5×5 / 7×7，还有舒尔特方格</p><div class="go">去玩</div>
+      </a>
+      <a class="card" href="https://www.puzzle-nonograms.com/" target="_blank" rel="noopener nofollow">
+        <span class="tag">3 年级+</span><div class="ico">🖼️</div>
+        <h3>数织</h3><p>按数字涂格子，最后是一幅画</p><div class="go">去玩</div>
+      </a>
+      <a class="card" href="https://www.puzzle-skyscrapers.com/" target="_blank" rel="noopener nofollow">
+        <span class="tag">5 年级+</span><div class="ico">🏙️</div>
+        <h3>摩天楼</h3><p>用排除法推高楼高度</p><div class="go">去玩</div>
+      </a>
+    </div>
+    <div class="chips" style="margin-top:14px">
+      <a class="chip" href="https://www.puzzle-star-battle.com/" target="_blank">星战</a>
+      <a class="chip" href="https://www.puzzle-nurikabe.com/" target="_blank">数墙</a>
+      <a class="chip" href="https://www.puzzle-loop.com/" target="_blank">数回</a>
+      <a class="chip" href="https://www.puzzle-bridges.com/" target="_blank">数桥</a>
+      <a class="chip" href="https://www.puzzle-binairo.com/" target="_blank">黑白棋</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 五、工具 ================= -->
+<section id="tool">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><b></b>工具</h2>
+      <span class="sub">立体几何单独拎出来做一张大卡</span>
+    </div>
+    <div class="grid g3 hint-outline">
+      <span class="hint-note">⑥ 三列：先放“最常用”，立体几何工具单独强调</span>
+
+      <a class="card" href="https://www.geogebra.org/calculator" target="_blank" rel="noopener nofollow">
+        <span class="tag hot">讲题神器</span><div class="ico">📐</div>
+        <h3>GeoGebra 图形计算器</h3>
+        <p>函数图像、动点轨迹、几何变换，课堂演示首选</p><div class="go">打开</div>
+      </a>
+
+      <a class="card" href="https://www.geogebra.org/3d" target="_blank" rel="noopener nofollow">
+        <span class="tag hot">立体几何</span><div class="ico">🧊</div>
+        <h3>GeoGebra 3D</h3>
+        <p>旋转体、截面、展开图、三视图——立体几何专用</p><div class="go">打开</div>
+      </a>
+
+      <a class="card" href="https://www.desmos.com/calculator?lang=zh-CN" target="_blank" rel="noopener nofollow">
+        <div class="ico">📈</div>
+        <h3>Desmos</h3>
+        <p>中文界面，作图快，适合函数与不等式</p><div class="go">打开</div>
+      </a>
+    </div>
+    <div class="chips" style="margin-top:14px">
+      <a class="chip" href="https://www.latexlive.com/" target="_blank">LaTeX 公式编辑</a>
+      <a class="chip" href="https://excalidraw.com/" target="_blank">Excalidraw 白板</a>
+      <a class="chip" href="https://www.desmos.com/3d?lang=zh-CN" target="_blank">Desmos 3D</a>
+      <a class="chip" href="https://www.ilovepdf.com/zh-cn" target="_blank">PDF 工具</a>
+      <a class="chip" href="https://tinypng.com/" target="_blank">图片压缩</a>
+      <a class="chip" href="https://cli.im/" target="_blank">二维码</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 六、AI ================= -->
+<section id="ai">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2><b></b>AI 助手</h2>
+      <span class="sub">给家长的“会用”比“多用”重要</span>
+    </div>
+    <div class="grid g3 hint-outline">
+      <span class="hint-note">⑦ 放最后：AI 是加分项，不抢前面版块的位置</span>
+      <a class="card" href="https://chat.deepseek.com/" target="_blank" rel="noopener nofollow">
+        <div class="ico">🐋</div><h3>DeepSeek</h3><p>免费，数学推理强，讲题思路清楚</p><div class="go">打开</div>
+      </a>
+      <a class="card" href="https://kimi.moonshot.cn/" target="_blank" rel="noopener nofollow">
+        <div class="ico">🌙</div><h3>Kimi</h3><p>长文档问答，讲义 PDF 直接丢进去问</p><div class="go">打开</div>
+      </a>
+      <a class="card" href="https://www.doubao.com/" target="_blank" rel="noopener nofollow">
+        <div class="ico">🫘</div><h3>豆包</h3><p>拍照解题、语音提问，家长易上手</p><div class="go">打开</div>
+      </a>
+    </div>
+    <div class="chips" style="margin-top:14px">
+      <a class="chip" href="https://tongyi.aliyun.com/" target="_blank">通义千问</a>
+      <a class="chip" href="https://chatglm.cn/" target="_blank">智谱清言</a>
+      <a class="chip" href="https://yiyan.baidu.com/" target="_blank">文心一言</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 金诺数学 · 竞赛成长资源站（布局示意）</div>
+    <div>外链均为第三方网站，内容以官方发布为准</div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('toggleHint');
+  btn.addEventListener('click', () => {
+    document.body.classList.toggle('no-hint');
+    btn.textContent = document.body.classList.contains('no-hint') ? '显示布局标注' : '隐藏布局标注';
+  });
+</script>
+</body>
+</html>
