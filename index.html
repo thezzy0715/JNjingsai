@@ -81,28 +81,6 @@
   footer{margin-top:56px;padding:34px 0;background:#0f1b2b;color:#9fb0c3;font-size:13.5px}
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
-  /* ---------- 布局标注（demo 专用，正式上线可整段删除） ---------- */
-  .hint-outline{outline:2px dashed #f0a04b;outline-offset:6px;border-radius:6px;position:relative}
-  .hint-note{position:absolute;top:-14px;left:12px;background:#f0a04b;color:#fff;font-size:12px;
-             padding:2px 9px;border-radius:6px;font-weight:600;z-index:2}
-  #toggleHint{position:fixed;right:18px;bottom:18px;z-index:99;background:#1f2d3d;color:#fff;border:0;
-              padding:11px 16px;border-radius:12px;font-size:13.5px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25)}
-  body.no-hint .hint-outline{outline:none}
-  body.no-hint .hint-note{display:none}
-
-  @media (max-width:900px){
-    .g3,.g4{grid-template-columns:repeat(2,1fr)}
-    .hero h1{font-size:26px}
-    .nav a.lnk{display:none}
-  }
-  @media (max-width:560px){
-    .g2,.g3,.g4{grid-template-columns:1fr}
-  }
-</style>
-</head>
-<body>
-
-<button id="toggleHint">隐藏布局标注</button>
 
 <!-- ================= 导航 ================= -->
 <header>
